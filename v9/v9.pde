@@ -30,13 +30,23 @@ void setup() {
 void draw() {
   time += 1;
   noStroke();
+  
+  background(0);
+  
+   // Change height of the camera with mouseY
+  camera(-width/2, -height + 2*mouseY, 2*mouseX, // eyeX, eyeY, eyeZ
+         0.0, 0.0, 0.0, // centerX, centerY, centerZ
+         0.0, 1.0, 0.0); // upX, upY, upZ
 
   float dirY = (mouseY / float(height) - 0.5) * 2;
   float dirX = (mouseX / float(width) - 0.5) * 2;
   
   //directionalLight(204, 204, 204, -dirX, -dirY, -1); 
-  pointLight(255, 0, 0, mouseX, mouseY, 800);
-  pointLight(255, 255, 0, mouseX, mouseY, 0);
+  
+  //directionalLight(255, 255, 255, 0, 0, -1); 
+
+  pointLight(255, 255, 255, mouseX, mouseY, 800);
+  pointLight(255, 255, 255, mouseX, mouseY, 0);
 
   sinkX = width/2 + width/2 * cos(time*0.01); //mouseX;
   sinkY = height/2 + height/2 * sin(time*0.01);//mouseY;
@@ -61,7 +71,7 @@ void draw() {
       translate(width/(columns+1), 0, 0);
       pushMatrix();
       // z is translated separately so it can be reset for each sphere
-      translate(0,0,400-0.01*(distToSink*distToSink)+0.01*(distToSink2*distToSink2));
+      translate(0,0,-2000+0.01*(distToSink*distToSink)-0.01*(distToSink2*distToSink2));
       sphere(sphereBaseRadius/max(rows,columns));
       popMatrix();
       
@@ -70,11 +80,22 @@ void draw() {
     popMatrix();
   }
   
-  filter(THRESHOLD);  //<-- builtin is 10x slower than customized blur code
-  loadPixels();
-  shiftBlur3(pixels, screenBuf);
-  arrayCopy(screenBuf, pixels);
-  updatePixels();
+  //filter(THRESHOLD);
+  
+  //filter(THRESHOLD);  //<-- builtin is 10x slower than customized blur code
+//  loadPixels();
+//  shiftBlur3(pixels, screenBuf);
+//  arrayCopy(screenBuf, pixels);
+//  updatePixels();
+//  loadPixels();
+//  shiftBlur3(pixels, screenBuf);
+//  arrayCopy(screenBuf, pixels);
+//  updatePixels();
+  //filter(ERODE);  //<-- builtin is 10x slower than customized blur code
+//  loadPixels();
+//  shiftBlur3(pixels, screenBuf);
+//  arrayCopy(screenBuf, pixels);
+//  updatePixels();
   
 }
 
